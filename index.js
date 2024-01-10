@@ -9,9 +9,17 @@ const lb_password= process.env.LETTERBOXD_PASSWORD;
 
 (async () => {
    const prompt = require("prompt-sync")({ sigint: true });
-   const date = prompt("Chose the date to remove (year (YYYY), month (YYYY/MM) or day (YYYY/MM/DD): ");
-   console.log(`Removing ${date} \n`);
+   let date 
+   
+   date= prompt("Chose the date to remove (year (YYYY), month (YYYY/MM) or day (YYYY/MM/DD): ");
 
+   if (!m(date, "YYYY/MM/DD", true).isValid() && !m(date, "YYYY/MM", true).isValid() && !m(date, "YYYY", true).isValid() && !m(date, "YYYY/M/DD", true).isValid() && !m(date, "YYYY/MM/D", true).isValid()) {
+      console.log("\nPlease enter a valid date")
+      date= prompt("Chose the date to remove (year (YYYY), month (YYYY/MM) or day (YYYY/MM/DD): ");
+   }
+
+   console.log(`Removing ${date} \n`);
+   
 
    const browser = await puppeteer.launch({ headless: false});
    const page = await browser.newPage();
